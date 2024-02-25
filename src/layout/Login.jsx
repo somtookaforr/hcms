@@ -34,7 +34,7 @@ const Login = () => {
     
   return (
     <div className='grid bg-blue-950'>
-        <form onSubmit={handleSubmit} className='w-1/3 grid gap-y-4 p-10 rounded border border-blue-400 justify-self-center my-20'>
+        <form onSubmit={handleSubmit} className='w-11/12 lg:w-1/3 grid gap-y-4 p-10 rounded border border-blue-400 justify-self-center my-20'>
             <div className="">
                 <label htmlFor="" className='text-white'>Email</label> <br/>
                 <input type="email" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' name='email' value={formData.email} onChange={handleChange} />

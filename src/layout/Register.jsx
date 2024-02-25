@@ -1,16 +1,17 @@
 import React, {useState} from 'react'
 import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
 
 const Register = () => {
     const userInput = {
-        firstName: '',
-        lastName: '',
+        first_name: '',
+        last_name: '',
         email: '',
-        userName: '',
-        userType: '',
-        phoneNo: '',
+        username: '',
+        user_type: '',
+        phone_number: '',
         password: '',
-        conPassword: ''
+        password2: ''
     }
     const [formData, setFormData] = useState(userInput);
 
@@ -23,56 +24,66 @@ const Register = () => {
 
     const handleSubmit = async (e) => {
     e.preventDefault();
+    const customId = 99999;
+
     try {
         const response = await axios.post('http://127.0.0.1:8000/api/register/', formData);
         console.log('Data submitted successfully');
+        toast.success("Success!", {
+            toastId: customId
+          });
         console.log(response);
     } catch (error) {
         console.error('There was a problem with the request:', error.message);
+        toast.error(error.message, {
+            toastId: customId
+          });
     }
     };
-    
+
+
   return (
     <div className='grid bg-blue-950'>
-        <form onSubmit={handleSubmit} className='w-1/3 grid gap-y-4 p-10 rounded border border-blue-400 justify-self-center my-20'>
+        <ToastContainer autoClose={8000} />
+        <form onSubmit={handleSubmit} className='w-11/12 lg:w-1/3 grid gap-y-4 p-10 rounded border border-blue-400 justify-self-center my-20'>
             <div className="">
-                <label htmlFor="" className='text-white'>First Name</label> <br/>
-                <input type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' name='firstName' value={formData.firstName} onChange={handleChange} />
+                <label htmlFor="name" className='text-white'>First Name</label> <br/>
+                <input type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' name='first_name' value={formData.firstName} onChange={handleChange} />
             </div>
             
-            <div className="">
+            <div className="name">
                 <label htmlFor="" className='text-white'>Last Name</label> <br/>
-                <input type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' name='lastName' value={formData.lastName} onChange={handleChange} />
+                <input type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' name='last_name' value={formData.lastName} onChange={handleChange} />
             </div>
             
-            <div className="">
+            <div className="email">
                 <label htmlFor="" className='text-white'>Email</label> <br/>
                 <input type="email" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' name='email' value={formData.email} onChange={handleChange} />
             </div>
             
-            <div className="">
+            <div className="name">
                 <label htmlFor="" className='text-white'>User Name</label> <br/>
-                <input type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' name='userName' value={formData.userName} onChange={handleChange} /> 
+                <input type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' name='username' value={formData.username} onChange={handleChange} /> 
             </div>
             
-            <div className="">
+            <div className="user">
                 <label htmlFor="" className='text-white'>User Type</label> <br/>
-                <input type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' name='userType' value={formData.userType} onChange={handleChange} />    
+                <input type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' name='user_type' value={formData.userType} onChange={handleChange} />    
             </div>
             
-            <div className="">
+            <div className="number">
                 <label htmlFor="" className='text-white'>Phone Number</label> <br/>
-                <input type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' name='phoneNo' value={formData.phoneNo} onChange={handleChange} />
+                <input type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' name='phone_number' value={formData.phoneNo} onChange={handleChange} />
             </div>
             
-            <div className="">
+            <div className="password">
                 <label htmlFor="" className='text-white'>Password</label> <br/>
                 <input type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' name='password' value={formData.password} onChange={handleChange} />
             </div>
             
-            <div className="">
+            <div className="password">
                 <label htmlFor="" className='text-white'>Confirm Password</label> <br/>
-                <input type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' name='conPassword' value={formData.conPassword} onChange={handleChange} />
+                <input type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' name='password2' value={formData.conPassword} onChange={handleChange} />
             </div>
 
             <p className='text-white text-right'>Already have an account yet? <a href="/" className='text-blue-600 underline'>Login</a></p>

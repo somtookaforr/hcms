@@ -18,7 +18,7 @@ const Profile = () => {
         </div>
 
         <div className='col-span-9'>
-            <form action="" className="rounded border grid grid-cols-2 p-8 gap-8">
+            <form action="" className="rounded border grid lg:grid-cols-2 p-8 gap-8">
             <div className="">
                 <label htmlFor="" className=''>First Name</label> <br/>
                 <input type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' name='firstName' />

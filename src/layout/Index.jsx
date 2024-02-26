@@ -12,7 +12,7 @@ const Index = () => {
         <h3 className='font-semibold text-3xl my-10'>Welcome back John Doe</h3>
         <div className='rounded border p-4'>
           <h4 className='text-xl font-semibold mb-6'>View Submitted Complaints</h4>
-          <div className='grid lg:grid-cols-2 rounded border w-1/3 p-4'>
+          <div className='grid lg:grid-cols-2 rounded border w-min sm:w-1/3 p-4'>
             <div>
               <p className="title font-semibold text-lg">Bad Tap</p>
               <p className="desc mb-5">Tap is leaking</p>

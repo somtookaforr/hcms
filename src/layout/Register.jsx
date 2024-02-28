@@ -1,6 +1,8 @@
 import React, {useState} from 'react'
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import { endpoint } from '../App';
 
 const Register = () => {
     const userInput = {
@@ -14,6 +16,7 @@ const Register = () => {
         password2: ''
     }
     const [formData, setFormData] = useState(userInput);
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
     setFormData({
@@ -22,17 +25,18 @@ const Register = () => {
     });
     };
 
+
     const handleSubmit = async (e) => {
     e.preventDefault();
     const customId = 99999;
 
     try {
-        const response = await axios.post('http://127.0.0.1:8000/api/register/', formData);
-        console.log('Data submitted successfully');
+        const response = await axios.post(endpoint + 'register/', formData);
         toast.success("Success!", {
             toastId: customId
           });
-        console.log(response);
+        navigate('./Index')
+        // console.log(response);
     } catch (error) {
         console.error('There was a problem with the request:', error.message);
         toast.error(error.message, {
@@ -68,7 +72,13 @@ const Register = () => {
             
             <div className="user">
                 <label htmlFor="" className='text-white'>User Type</label> <br/>
-                <input type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' name='user_type' value={formData.userType} onChange={handleChange} />    
+                <select name="user_type" id="" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' value={formData.user_type} onChange={handleChange}>
+                    <option value="" disabled>-Select-</option>
+                    <option value={1}>Admin</option>
+                    <option value={2}>Staff</option>
+                    <option value={3}>Student</option>
+                </select>
+                {/* <input type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' name='user_type' value={formData.user_type} onChange={handleChange} />     */}
             </div>
             
             <div className="number">
@@ -83,7 +93,7 @@ const Register = () => {
             
             <div className="password">
                 <label htmlFor="" className='text-white'>Confirm Password</label> <br/>
-                <input type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' name='password2' value={formData.conPassword} onChange={handleChange} />
+                <input type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' name='password2' value={formData.password2d} onChange={handleChange} />
             </div>
 
             <p className='text-white text-right'>Already have an account yet? <a href="/" className='text-blue-600 underline'>Login</a></p>

@@ -1,18 +1,16 @@
 import React, {useState} from 'react'
 import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import { endpoint } from '../App';
 
 const Login = () => {
     const userInput = {
-        firstName: '',
-        lastName: '',
         email: '',
-        userName: '',
-        userType: '',
-        phoneNo: '',
-        password: '',
-        conPassword: ''
+        password: ''
     }
     const [formData, setFormData] = useState(userInput);
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
     setFormData({
@@ -23,17 +21,27 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
     e.preventDefault();
+    const customId = 99999;
+
     try {
-        const response = await axios.post('http://127.0.0.1:8000/api/Login/', formData);
-        console.log('Data submitted successfully');
-        console.log(response);
+        const response = await axios.post(endpoint + 'token/', formData);
+        toast.success("Success!", {
+            toastId: customId
+        });
+        localStorage.setItem("accessToken", response.data.access);
+        navigate('./Index')
     } catch (error) {
         console.error('There was a problem with the request:', error.message);
+        toast.error(error.message, {
+            toastId: customId
+        });
     }
     };
     
+    
   return (
     <div className='grid bg-blue-950'>
+        <ToastContainer autoClose={8000} />
         <form onSubmit={handleSubmit} className='w-11/12 lg:w-1/3 grid gap-y-4 p-10 rounded border border-blue-400 justify-self-center my-20'>
             <div className="">
                 <label htmlFor="" className='text-white'>Email</label> <br/>
@@ -42,7 +50,7 @@ const Login = () => {
                      
             <div className="">
                 <label htmlFor="" className='text-white'>Password</label> <br/>
-                <input type="number" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' name='password' value={formData.password} onChange={handleChange} />
+                <input type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' name='password' value={formData.password} onChange={handleChange} />
             </div>
 
             <p className='text-white text-right'>Don't have an account yet? <a href="/register" className='text-blue-600 underline'>Register</a></p>

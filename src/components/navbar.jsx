@@ -29,7 +29,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav id='myNav' className={isSmallScreen ? 'overlay' : 'lg:grid bg-blue-950 text-white py-8'}>
+      <nav id='myNav' className={isSmallScreen ? 'overlay' : 'lg:grid bg-blue-950 text-white py-8 shadow-lg'}>
           <div className="grid grid-cols-2 my-8 py-6 px-6">
               <NavLink
               to="/"
@@ -43,26 +43,30 @@ const Navbar = () => {
             <NavLink
               to="/index"
               onClick={closeNav}
+              className={'navItems'}
               > 
               Index
             </NavLink>
             <NavLink
               to="/complaints"
               onClick={closeNav}
+              className={'navItems'}
               > 
-              View Complaints
+              Complaints
               </NavLink>
               <NavLink
               to="/profile"
               onClick={closeNav}
+              className={'navItems'}
               > 
               Profile
               </NavLink>
               <NavLink
               to="/feedback"
               onClick={closeNav}
+              className={'navItems'}
               > 
-              Submit Feedback
+              Feedback
               </NavLink>
               </div>
           </div>

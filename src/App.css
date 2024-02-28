@@ -1,2 +1,6 @@
 @import url("./styles/components.css");
 @import "react-toastify/dist/ReactToastify.css";
+
+html{
+    background-color: whitesmoke;
+}

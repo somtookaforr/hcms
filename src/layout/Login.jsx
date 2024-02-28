@@ -11,7 +11,7 @@ const Login = () => {
     }
     const [formData, setFormData] = useState(userInput);
     const navigate = useNavigate();
-
+    
     const handleChange = (e) => {
     setFormData({
         ...formData,
@@ -29,6 +29,7 @@ const Login = () => {
             toastId: customId
         });
         localStorage.setItem("accessToken", response.data.access);
+        localStorage.setItem("refreshToken", response.data.refresh);
         navigate('./Index')
     } catch (error) {
         console.error('There was a problem with the request:', error.message);
@@ -40,9 +41,9 @@ const Login = () => {
     
     
   return (
-    <div className='grid bg-blue-950'>
+    <div className='grid bg-blue-950 h-screen'>
         <ToastContainer autoClose={8000} />
-        <form onSubmit={handleSubmit} className='w-11/12 lg:w-1/3 grid gap-y-4 p-10 rounded border border-blue-400 justify-self-center my-20'>
+        <form onSubmit={handleSubmit} className='lg:w-1/3 grid gap-y-4 p-10 rounded border border-blue-400 justify-self-center h-max'>
             <div className="">
                 <label htmlFor="" className='text-white'>Email</label> <br/>
                 <input type="email" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' name='email' value={formData.email} onChange={handleChange} />

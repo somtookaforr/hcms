@@ -29,10 +29,10 @@ const Navbar = () => {
 
   return (
     <>
-      <nav id='myNav' className={isSmallScreen ? 'overlay' : 'lg:grid bg-blue-950 text-white py-8 shadow-lg'}>
+      <nav id='myNav' className={isSmallScreen ? 'overlay' : 'bg-blue-950 text-white py-8 shadow-xl lg:h-screen'}>
           <div className="grid grid-cols-2 my-8 py-6 px-6">
               <NavLink
-              to="/"
+              to="/index"
               > 
             <img src={''} alt="HCMS" className='h-12' />              
             </NavLink>

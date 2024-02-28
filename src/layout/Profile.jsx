@@ -12,6 +12,7 @@ const Profile = () => {
     const phoneNumber = localStorage.getItem("phoneNumber");
     const userType = localStorage.getItem("userType");
     const userName = localStorage.getItem("userName"); 
+    const refreshToken = localStorage.getItem("refreshToken");
 
     const navigate = useNavigate();
     const handleSubmit = async (e) => {
@@ -19,7 +20,11 @@ const Profile = () => {
     const customId = 99999;
 
     try {
-        const response = await axios.get(endpoint + 'logout/');
+        const response = await axios.post(endpoint + 'logout/', null, {
+            headers: {
+            'Authorization': `Bearer ${refreshToken}`
+            }
+        });
         toast.success("Success!", {
             toastId: customId
         });
@@ -69,7 +74,7 @@ const Profile = () => {
                 <input type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' placeholder={phoneNumber} name='phoneNo' disabled />
             </div>
 
-            <button className='w-full bg-red-600 h-12 rounded text-white mt-8' type='submit'>Log Out</button>
+            <button className='w-full bg-red-600 h-12 rounded text-white mt-8 lg:col-span-2' type='submit'>Log Out</button>
             </form>
         </Layout> 
     </>

@@ -37,12 +37,15 @@ const Header = () => {
 
   return (
     <div className='shadow-lg h-16 w-full bg-white'>
-        <div className='grid justify-items-end px-5'>
-        <a href="/profile" className="flex py-2 logoutHover">
+        <div className='relative grid justify-items-end px-5'>
+          <div className="flex py-2 userDropdown">
             <p className='self-center text-lg'>{localStorage.getItem("userName")}</p>
             <p className='p-2'><FaUserCircle className='text-gray-500' size={35}/></p>           
-        </a>
-        <button onClick={logOut} className='logoutBtn'>Log Out</button>
+          </div>
+          <div className="grid bg-white userContent">
+            <a href="./profile" className="px-8 py-2.5">View Profile</a>
+            <button onClick={logOut} className='bg-red-600 text-white py-2.5 rounded'>Log Out</button>
+          </div>
         </div>
     </div>
   )

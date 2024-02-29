@@ -4,17 +4,12 @@ nav, footer{
 } */
 
 /* HEADER */
-.logoutBtn{
-  padding: 10px;
-  background-color: red;
-  text-align: center;
-  border-radius: 0 0 4px 4px;
-  color: white;
+.userContent{
   opacity: 0;
 }
 
 
-.logoutBtn:hover,.logoutHover:hover + .logoutBtn{
+.userContent:hover,.userDropdown:hover + .userContent{
   opacity: 100;
 }
 

@@ -10,6 +10,7 @@ import moment from 'moment';
 
 const Complaints = () => {
   const [modalIsOpen, setIsOpen] = React.useState(false);
+  const [feedbackOpen, setFeedbackOpen] = React.useState(false);
   const [complaints, setComplaints] = useState([ ]);
   const accessToken = localStorage.getItem("accessToken");
 
@@ -18,6 +19,12 @@ const Complaints = () => {
   }
   function closeModal() {
     setIsOpen(false);
+  }
+  function openFeedbackModal() {
+    setFeedbackOpen(true);
+  }
+  function closeFeedbackModal() {
+    setFeedbackOpen(false);
   }
 
   const customStyles = {
@@ -85,7 +92,7 @@ const Complaints = () => {
     .then(response => {
         // Handle response data
         setComplaints(response.data);
-        console.log(response);
+        console.log(response.data);
     })
     .catch(error => {
         // Handle error
@@ -94,18 +101,53 @@ const Complaints = () => {
   }, []);
 
 
+  const [feedback, setFeedback] = useState([]);
+  const handleFeedbackChange = (e) => {
+  setFeedback({
+      ...feedback,
+      [e.target.name]: e.target.value
+  });
+  };
+  const handleFeedbackSubmit = async (e) => {
+  e.preventDefault();
+  const customId = 99999;
+
+  try {
+      const response = await axios.post(endpoint + 'feedback/', feedback, {
+        headers: {
+        'Authorization': `Bearer ${accessToken}`
+        }
+    });
+      toast.success("Feedback submitted successfully!", {
+          toastId: customId
+      });
+      console.log(response);
+  } catch (error) {
+      console.error('There was a problem with the request:', error.message);
+      toast.error(error.message, {
+          toastId: customId
+      });
+  }
+  };
+
+
+
+  let card = `rounded border p-8 shadow-sm bg-white`;
+  let button = `w-full justify-self-center h-12 rounded text-white mt-8`;
+
   return (
     <>
     <ToastContainer autoClose={8000} />
       <Layout>
       <div className="grid gap-y-10">
-        {}
-        <p>
-        Dear valued users,
-        Your feedback is crucial to us! If you have any concerns, complaints, or suggestions regarding our services, we encourage you to share them with us. Your input helps us improve and ensures that we continue to meet your needs effectively.
-        </p>
-        <button onClick={openModal} className='w-full justify-self-center bg-blue-600 h-12 rounded text-white'>Submit a Complaint</button>
-
+        <div className={`${card}`}>
+          <h4 className='text-xl font-semibold mb-6'>Submit Complaints</h4>
+          <p>
+          Dear valued users,
+          Your feedback is crucial to us! If you have any concerns, complaints, or suggestions regarding our services, we encourage you to share them with us. Your input helps us improve and ensures that we continue to meet your needs effectively.
+          </p>
+          <button onClick={openModal} className={`${button} bg-blue-600`}>Submit a Complaint</button>
+        </div>
 
           <Modal
             isOpen={modalIsOpen}
@@ -137,28 +179,54 @@ const Complaints = () => {
                     <option value="other">Other</option>
                   </select>
 
-                  <button type='submit' className='w-full bg-blue-600 h-12 rounded text-white mt-8'>Submit</button>
+                  <button type='submit' className={`${button} bg-green-600`}>Submit</button>
+                </form>
+              </div>
+          </Modal>
+          
+          {complaints.length != 0 ?
+            <div className={`${card}`}>
+              <h4 className='text-xl font-semibold mb-6'>View Submitted Complaints</h4>
+              <div className='grid lg:grid-cols-2 gap-8'>
+                {complaints.map((x,key) =>
+                <div className={`rounded-md border p-4 w-full ${x.status == 'resolved' ? 'bg-[#D9ECED]' : 'bg-[#F8EAEB]' }`} key={key}>
+                  <div>
+                    <p className='text-right mb-4 text-sm'>{moment(x.submission_date).format('MMMM Do YYYY, h:mm:ss a')}</p>
+                    <p className="title font-semibold text-lg">{x.title}</p>
+                    <p className="desc mb-5">{x.description}</p>
+                    <div className="grid grid-cols-2">
+                      <p className='mt-4'>Status: <span className="font-semibold">{x.status}</span></p> 
+                      <p className='justify-self-end bg-gray-400 self-end rounded-lg text-white w-min px-2'>{x.category}</p>
+                    </div>
+                    <button className={`${button} ${x.status == 'resolved' ? 'bg-green-600' : 'bg-red-600' }`} onClick={() => setFeedback({ complaint: x.complaint_id, student: x.student, staff: 1 })} >
+                      <button onClick={openFeedbackModal}>
+                        Leave Feedback
+                      </button>
+                    </button>
+
+                  </div>
+                </div>
+                )}
+              </div>          
+            </div>
+           :''}
+          <Modal
+            isOpen={feedbackOpen}
+            onRequestClose={closeFeedbackModal}
+            style={customStyles}
+            contentLabel="Submit Complaint"
+          >
+            <button onClick={closeFeedbackModal} className='float-right'><IoClose size={20} className='text-blue-600 mb-4'/></button>
+            <div className="shadow-sm clear-both p-4">
+                <h4 className='text-xl font-semibold mb-6'>Submit Feedback</h4>
+                <p>Please fill in the details below</p>
+                <form action="" className='grid gap-y-4' onSubmit={handleFeedbackSubmit}>
+                    <textarea name='feedback' rows="5" type="text" placeholder='Feedback' className='rounded w-full mt-1 p-2 border border-blue-400' onChange={handleFeedbackChange}></textarea>
+                    <button type='submit' className={`${button} bg-green-600`}>Submit</button>
                 </form>
               </div>
           </Modal>
 
-          <div className='rounded border p-8 shadow-sm bg-white'>
-            <h4 className='text-xl font-semibold mb-6'>View Submitted Complaints</h4>
-            <div className='grid md:grid-cols-2 gap-8'>
-              {complaints.map((x,key) =>
-              <div className={`rounded border p-4 w-full ${x.status == 'resolved' ? 'bg-green-100' : 'bg-red-100' }`} key={key}>
-                <div>
-                  <p className='text-right mb-4'>{moment(x.submission_date).format('MMMM Do YYYY, h:mm:ss a')}</p>
-                  <p className="title font-semibold text-lg">{x.title}</p>
-                  <p className="desc mb-5">{x.description}</p>
-                  <p className='category bg-gray-400 rounded-lg text-white w-min px-2'>{x.category}</p>
-                  <p className='mt-4'>Status: <span className="font-semibold">{x.status}</span></p>              
-                </div>
-              </div>
-              )}
-            </div>          
-          </div>
-    
         </div>
       </Layout>
     </>

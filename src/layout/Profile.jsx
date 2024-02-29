@@ -13,7 +13,7 @@ const Profile = () => {
   return (
     <>
         <Layout>
-            <form action="" className="rounded border grid lg:grid-cols-2 p-8 gap-8 bg-white">
+            <form action="" className="rounded border grid p-8 gap-8 bg-white">
             <div className="">
                 <label htmlFor="" className=''>First Name</label> <br/>
                 <input type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' placeholder={firstName} name='first_name' />

@@ -59,7 +59,7 @@ nav, footer{
   .navItems:hover,  a.active{
     color: black;
     background-color: whitesmoke;
-    padding: 7px;
+    padding: 10px;
     border-radius: 5px;
   }
 

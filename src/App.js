@@ -4,10 +4,9 @@ import './App.css'
 import Index from "./layout/Index";
 import Register from "./layout/Register";
 import Profile from "./layout/Profile";
-import Feedback from "./layout/Feedback";
 import Login from "./layout/Login";
 import Complaints from "./layout/Complaints";
-
+import Users from "./layout/Users";
 export const endpoint = 'https://hcms-backend-wmdp.onrender.com/api/';
 // export const accessToken = localStorage.getItem("accessToken");
 
@@ -20,8 +19,8 @@ function App() {
         <Route exact path='/index' element={<Index />} />
         <Route exact path='/register' element={<Register />} />
         <Route exact path='/profile' element={<Profile />} />
-        <Route exact path='/feedback' element={<Feedback />} />
         <Route exact path='/complaints' element={<Complaints />} />
+        <Route exact path='/users' element={<Users />} />
       </Routes>
     </Router>      
     </div>

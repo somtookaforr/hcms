@@ -25,7 +25,7 @@ const Navbar = () => {
     };
   }, []);
 
- 
+  const userType = localStorage.getItem("userType")
 
   return (
     <>
@@ -59,13 +59,16 @@ const Navbar = () => {
               > 
               Profile
               </NavLink>
+              {userType == 1 ?
               <NavLink
-              to="/feedback"
+              to="/users"
               onClick={window.innerWidth < 1024 ? closeNav : ''}
               className={'navItems'}
               > 
-              Feedback
+              Users
               </NavLink>
+              : ''
+              }
               </div>
           </div>
       </nav>

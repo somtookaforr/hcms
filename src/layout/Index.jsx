@@ -28,6 +28,8 @@ const Index = () => {
             console.error('Error fetching data:', error);
         });
     }, []);
+
+    
   return (
     <>
     <Layout>

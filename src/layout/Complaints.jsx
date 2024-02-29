@@ -97,7 +97,7 @@ const Complaints = () => {
             contentLabel="Submit Complaint"
           >
             <button onClick={closeModal} className='float-right'><IoClose size={20} className='text-blue-600 mb-4'/></button>
-            <div className="shadow-sm clear-both">
+            <div className="shadow-sm clear-both p-4">
                 <h4 className='text-xl font-semibold mb-6'>Submit New Complaints</h4>
                 <p>Please fill in the details below</p>
                 <form action="" className='grid gap-y-4' onSubmit={handleSubmit}>

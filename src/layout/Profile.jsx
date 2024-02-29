@@ -1,9 +1,5 @@
-import React, {useState} from 'react'
+import React from 'react'
 import Layout from '../components/layout'
-import axios from 'axios';
-import { toast, ToastContainer } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
-import { endpoint } from '../App';
  
 const Profile = () => {
     const firstName = localStorage.getItem("firstName");
@@ -16,7 +12,6 @@ const Profile = () => {
     
   return (
     <>
-        <ToastContainer autoClose={8000} />
         <Layout>
             <form action="" className="rounded border grid lg:grid-cols-2 p-8 gap-8 bg-white">
             <div className="">

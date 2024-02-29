@@ -36,10 +36,10 @@ const Register = () => {
         toast.loading('Loading...', { autoClose: false });
         const response = await axios.post(endpoint + 'register/', formData);
         toast.dismiss();
-        toast.success("Success!", {
+        toast.success("Account created successfully, Please proceed to login!", {
             toastId: customId
           });
-        navigate('./Index')
+        navigate('./');
         // console.log(response);
     } catch (error) {
         toast.dismiss();
@@ -83,7 +83,7 @@ const Register = () => {
             <div className="user">
                 <label htmlFor="" className='text-white'>User Type</label> <br/>
                 <select name="user_type" id="" className='rounded h-9 w-full mt-1 p-2 border border-blue-400' onChange={handleChange} required>
-                    <option value="" disabled>-Select-</option>
+                    <option value="">-Select-</option>
                     <option value={1}>Admin</option>
                     <option value={2}>Staff</option>
                     <option value={3}>Student</option>
@@ -101,24 +101,24 @@ const Register = () => {
                 : formData.user_type == '3' ?
                 <>
                     <div className="grid grid-cols-2 gap-4">
-                        <div className="number">
+                        <div>
                             <label htmlFor="" className='text-white'>Matric Number</label> <br/>
                             <input type="text" className='rounded h-9 w-full mt-1 p-2 border border-blue-400' name='matric_no' onChange={handleChange} required />
                         </div>
 
-                        <div className="number">
+                        <div>
                             <label htmlFor="" className='text-white'>Department</label> <br/>
                             <select name="department" id="" className='rounded h-9 w-full mt-1 p-2 border border-blue-400' onChange={handleChange} required >
-                                <option value="" disabled>-Select-</option>
+                                <option value="">-Select-</option>
                                 <option value="1">Software Engineering</option>
                                 <option value="2">Computer Science</option>
                             </select>
                         </div>
 
-                        <div className="number">
+                        <div>
                             <label htmlFor="" className='text-white'>Hostel</label> <br/>
                             <select name="hostel" id="" className='rounded h-9 w-full mt-1 p-2 border border-blue-400' onChange={handleChange} required>
-                                <option value="" disabled>-Select-</option>
+                                <option value="">-Select-</option>
                                 <option value="101">Bethel Splendor</option>
                                 <option value="102">Welch</option>
                                 <option value="103">Samuel Akande</option>
@@ -126,7 +126,7 @@ const Register = () => {
                             </select>
                         </div>
                         
-                        <div className="number">
+                        <div>
                             <label htmlFor="" className='text-white'>Room Number</label> <br/>
                             <input type="text" className='rounded h-9 w-full mt-1 p-2 border border-blue-400' name='room_number' onChange={handleChange} required />
                         </div>

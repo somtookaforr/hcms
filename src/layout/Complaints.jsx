@@ -1,19 +1,21 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import Layout from '../components/layout'
 import Modal from 'react-modal';
 import { IoClose } from 'react-icons/io5'
 import axios from 'axios';
 import { endpoint } from '../App';
 import { toast, ToastContainer } from 'react-toastify';
+import moment from 'moment';
 
 
 const Complaints = () => {
   const [modalIsOpen, setIsOpen] = React.useState(false);
+  const [complaints, setComplaints] = useState([ ]);
+  const accessToken = localStorage.getItem("accessToken");
 
   function openModal() {
     setIsOpen(true);
   }
-
   function closeModal() {
     setIsOpen(false);
   }
@@ -52,8 +54,6 @@ const Complaints = () => {
   });
   };
 
-  const accessToken = localStorage.getItem("accessToken");
-
   const handleSubmit = async (e) => {
   e.preventDefault();
   const customId = 99999;
@@ -76,6 +76,23 @@ const Complaints = () => {
   }
   };
 
+  useEffect(() => {
+    axios.get(endpoint + 'complaints-by-user/', {
+        headers: {
+        'Authorization': `Bearer ${accessToken}`
+        }
+    })
+    .then(response => {
+        // Handle response data
+        setComplaints(response.data);
+        console.log(response);
+    })
+    .catch(error => {
+        // Handle error
+        console.error('Error fetching data:', error);
+    });
+  }, []);
+
 
   return (
     <>
@@ -87,7 +104,7 @@ const Complaints = () => {
         Dear valued users,
         Your feedback is crucial to us! If you have any concerns, complaints, or suggestions regarding our services, we encourage you to share them with us. Your input helps us improve and ensures that we continue to meet your needs effectively.
         </p>
-        <button onClick={openModal} className='w-full lg:w-1/3 justify-self-center bg-blue-600 h-12 rounded text-white'>Submit a Complaint</button>
+        <button onClick={openModal} className='w-full justify-self-center bg-blue-600 h-12 rounded text-white'>Submit a Complaint</button>
 
 
           <Modal
@@ -106,13 +123,13 @@ const Complaints = () => {
                   <textarea name='description' rows="5" type="text" placeholder='Description' className='rounded w-full mt-1 p-2 border border-blue-400' onChange={handleChange}></textarea>
 
                   <select name="status" id="" className='rounded h-9 w-full mt-1 p-2 border border-blue-400' onChange={handleChange}>
-                    <option value="" disabled>-Status-</option>
-                    <option value="plumbing">Resolved</option>
-                    <option value="masonry">Unresolved</option>
+                    <option value="">-Status-</option>
+                    <option value="resolved">Resolved</option>
+                    <option value="unresolved">Unresolved</option>
                   </select>
 
                   <select name="category" id="" className='rounded h-9 w-full mt-1 p-2 border border-blue-400' onChange={handleChange}>
-                    <option value="" disabled>-Category-</option>
+                    <option value="">-Category-</option>
                     <option value="plumbing">Plumbing</option>
                     <option value="masonry">Masonry</option>
                     <option value="carpentry">Carpentry</option>
@@ -125,20 +142,20 @@ const Complaints = () => {
               </div>
           </Modal>
 
-          <div className='rounded border p-4 shadow-sm bg-white'>
+          <div className='rounded border p-8 shadow-sm bg-white'>
             <h4 className='text-xl font-semibold mb-6'>View Submitted Complaints</h4>
-            <div className='grid lg:grid-cols-2 rounded border w-min sm:w-1/3 p-4'>
-              <div>
-                <p className="title font-semibold text-lg">Bad Tap</p>
-                <p className="desc mb-5">Tap is leaking</p>
-                <p className='category bg-gray-400 rounded-md text-white w-min px-4'>Plumbing</p>
-                {/* <p className="status">Unresolved</p> */}
-              </div>
-              <div>
-                <div className="flex">
-                  <p>Status:</p> <p className='rounded-full bg-green-500 h-4 w-4 self-center ml-2'></p>                
+            <div className='grid md:grid-cols-2 gap-8'>
+              {complaints.map((x,key) =>
+              <div className={`rounded border p-4 w-full ${x.status == 'resolved' ? 'bg-green-100' : 'bg-red-100' }`} key={key}>
+                <div>
+                  <p className='text-right mb-4'>{moment(x.submission_date).format('MMMM Do YYYY, h:mm:ss a')}</p>
+                  <p className="title font-semibold text-lg">{x.title}</p>
+                  <p className="desc mb-5">{x.description}</p>
+                  <p className='category bg-gray-400 rounded-lg text-white w-min px-2'>{x.category}</p>
+                  <p className='mt-4'>Status: <span className="font-semibold">{x.status}</span></p>              
                 </div>
               </div>
+              )}
             </div>          
           </div>
     

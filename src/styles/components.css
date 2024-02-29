@@ -3,8 +3,24 @@ nav, footer{
     padding: 0px 30px;
 } */
 
+/* HEADER */
+.logoutBtn{
+  padding: 10px;
+  background-color: red;
+  text-align: center;
+  border-radius: 0 0 4px 4px;
+  color: white;
+  opacity: 0;
+}
 
 
+.logoutBtn:hover,.logoutHover:hover + .logoutBtn{
+  opacity: 100;
+}
+
+
+
+/* NAVBAR MIN */
 .overlay {
     height: 0%;
     width: 100%;
@@ -16,14 +32,12 @@ nav, footer{
     background-color: rgba(0,0,0, 0.9);
     overflow-y: hidden;
     transition: 0.5s;
-    /* width: ; */
   }
   
   .overlay-content {
     position: relative;
     top: 0%;
     width: 100%;
-    /* text-align: center; */
     margin-top: 30px;
   }
   
@@ -37,7 +51,7 @@ nav, footer{
   }
   
   .overlay a:hover, .overlay a:focus {
-    color: #f1f1f1;
+    color: black;
   }
   
   .overlay .closebtn {
@@ -47,7 +61,7 @@ nav, footer{
     font-size: 60px;
   }
 
-  .navItems:hover{
+  .navItems:hover,  a.active{
     color: black;
     background-color: whitesmoke;
     padding: 7px;
@@ -56,13 +70,6 @@ nav, footer{
 
 
 
-  
-
-
-  /* @media screen and (min-width: 768px){
-    nav, footer {padding: 0px 60px;}
-  }
-   */
   @media screen and (max-height: 450px) {
     .overlay {overflow-y: auto;}
     .overlay a {font-size: 20px}

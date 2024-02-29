@@ -47,25 +47,11 @@ const Feedback = () => {
     <>
         <ToastContainer autoClose={8000} />
         <Layout>
+        <p className='mb-4'>Leave a feedback</p>
         <form action="" className="rounded border grid p-8 gap-8 bg-white" onSubmit={handleSubmit}>
             <div className="">
                 <label htmlFor="" className=''>Feedback</label> <br/>
                 <textarea name="" id="" cols="30" rows="5" className='rounded w-full mt-1 p-1 border border-blue-400'></textarea>
-            </div>
-            
-            <div className="">
-                <label htmlFor="" className=''>Complaint</label> <br/>
-                <input type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' name='lastName' />
-            </div>
-            
-            <div className="">
-                <label htmlFor="" className=''>Student</label> <br/>
-                <input type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' name='email' />
-            </div>
-            
-            <div className="">
-                <label htmlFor="" className=''>Staff</label> <br/>
-                <input type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' name='userName' /> 
             </div>
         </form>
         </Layout>

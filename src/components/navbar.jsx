@@ -31,39 +31,37 @@ const Navbar = () => {
     <>
       <nav id='myNav' className={isSmallScreen ? 'overlay' : 'bg-blue-950 text-white py-8 shadow-xl lg:h-screen'}>
           <div className="grid grid-cols-2 my-8 py-6 px-6">
-              <NavLink
-              to="/index"
-              > 
-            <img src={''} alt="HCMS" className='h-12' />              
-            </NavLink>
+            <div              > 
+              <img src={''} alt="HCMS" className='h-12' />              
+            </div>
             <IoClose onClick={closeNav} size={30} className={isSmallScreen ? 'ml-auto cursor-pointer self-center text-white' : 'hidden'} />
           </div>
           <div className="overlay-content cursor-pointer">
             <div className="grid px-6 gap-y-10">
             <NavLink
               to="/index"
-              onClick={closeNav}
+              onClick={window.innerWidth < 1024 ? closeNav : ''}
               className={'navItems'}
               > 
               Index
             </NavLink>
             <NavLink
               to="/complaints"
-              onClick={closeNav}
+              onClick={window.innerWidth < 1024 ? closeNav : ''}
               className={'navItems'}
               > 
               Complaints
               </NavLink>
               <NavLink
               to="/profile"
-              onClick={closeNav}
+              onClick={window.innerWidth < 1024 ? closeNav : ''}
               className={'navItems'}
               > 
               Profile
               </NavLink>
               <NavLink
               to="/feedback"
-              onClick={closeNav}
+              onClick={window.innerWidth < 1024 ? closeNav : ''}
               className={'navItems'}
               > 
               Feedback

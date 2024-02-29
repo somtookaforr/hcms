@@ -19,7 +19,9 @@ const Index = () => {
             localStorage.setItem("lastName", response.data.last_name);
             localStorage.setItem("phoneNumber", response.data.phone_number);
             localStorage.setItem("userType", response.data.user_type);
-            localStorage.setItem("userName", response.data.username);            
+            localStorage.setItem("userName", response.data.username);   
+            
+            console.log(response)
         })
         .catch(error => {
             // Handle error

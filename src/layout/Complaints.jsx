@@ -36,9 +36,13 @@ const Complaints = () => {
   const userInput = {
     title: '',
     description: '',
+    status: '',
     category: '',
+    resolved_date: null,
     student: 1,
+    staff: null
   }
+
   const [formData, setFormData] = useState(userInput);
 
   const handleChange = (e) => {
@@ -97,10 +101,18 @@ const Complaints = () => {
                 <h4 className='text-xl font-semibold mb-6'>Submit New Complaints</h4>
                 <p>Please fill in the details below</p>
                 <form action="" className='grid gap-y-4' onSubmit={handleSubmit}>
-                  <input name='title' value={formData.title} type="text" placeholder='title' className='rounded h-9 w-full mt-1 p-1 border border-blue-400' onChange={handleChange}/>
-                  <textarea name='description' value={formData.description} rows="10" type="text" placeholder='description' className='rounded w-full mt-1 p-1 border border-blue-400' onChange={handleChange}></textarea>
-                  <select name="category" value={formData.category} id="" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' onChange={handleChange}>
-                    <option value="" disabled>None</option>
+                  <input name='title' type="text" placeholder='Title' className='rounded h-9 w-full mt-1 p-2 border border-blue-400' onChange={handleChange}/>
+
+                  <textarea name='description' rows="5" type="text" placeholder='Description' className='rounded w-full mt-1 p-2 border border-blue-400' onChange={handleChange}></textarea>
+
+                  <select name="status" id="" className='rounded h-9 w-full mt-1 p-2 border border-blue-400' onChange={handleChange}>
+                    <option value="" disabled>-Status-</option>
+                    <option value="plumbing">Resolved</option>
+                    <option value="masonry">Unresolved</option>
+                  </select>
+
+                  <select name="category" id="" className='rounded h-9 w-full mt-1 p-2 border border-blue-400' onChange={handleChange}>
+                    <option value="" disabled>-Category-</option>
                     <option value="plumbing">Plumbing</option>
                     <option value="masonry">Masonry</option>
                     <option value="carpentry">Carpentry</option>
@@ -114,23 +126,22 @@ const Complaints = () => {
           </Modal>
 
           <div className='rounded border p-4 shadow-sm bg-white'>
-          <h4 className='text-xl font-semibold mb-6'>View Submitted Complaints</h4>
-          <div className='grid lg:grid-cols-2 rounded border w-min sm:w-1/3 p-4'>
-            <div>
-              <p className="title font-semibold text-lg">Bad Tap</p>
-              <p className="desc mb-5">Tap is leaking</p>
-              <p className='category bg-gray-400 rounded-md text-white w-min px-4'>Plumbing</p>
-              {/* <p className="status">Unresolved</p> */}
-            </div>
-            <div>
-              <div className="flex">
-                <p>Status:</p> <p className='rounded-full bg-green-500 h-4 w-4 self-center ml-2'></p>                
+            <h4 className='text-xl font-semibold mb-6'>View Submitted Complaints</h4>
+            <div className='grid lg:grid-cols-2 rounded border w-min sm:w-1/3 p-4'>
+              <div>
+                <p className="title font-semibold text-lg">Bad Tap</p>
+                <p className="desc mb-5">Tap is leaking</p>
+                <p className='category bg-gray-400 rounded-md text-white w-min px-4'>Plumbing</p>
+                {/* <p className="status">Unresolved</p> */}
               </div>
-            </div>
-          </div>          
+              <div>
+                <div className="flex">
+                  <p>Status:</p> <p className='rounded-full bg-green-500 h-4 w-4 self-center ml-2'></p>                
+                </div>
+              </div>
+            </div>          
           </div>
-
-            
+    
         </div>
       </Layout>
     </>

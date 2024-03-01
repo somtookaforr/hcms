@@ -4,8 +4,8 @@ import axios from 'axios'
 import { endpoint } from '../App'
 
 const Index = () => {
-  const accessToken = localStorage.getItem("accessToken");
-
+    const accessToken = localStorage.getItem("accessToken");
+    
     useEffect(() => {
         axios.get(endpoint + 'profile/', {
             headers: {
@@ -13,7 +13,6 @@ const Index = () => {
             }
         })
         .then(response => {
-            // Handle response data
             localStorage.setItem("email", response.data.email);
             localStorage.setItem("firstName", response.data.first_name);
             localStorage.setItem("lastName", response.data.last_name);
@@ -22,11 +21,9 @@ const Index = () => {
             localStorage.setItem("userName", response.data.username);               
         })
         .catch(error => {
-            // Handle error
             console.error('Error fetching data:', error);
         });
     }, []);
-
     
   return (
     <>

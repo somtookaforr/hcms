@@ -1,6 +1,7 @@
 import React from 'react'
 import Layout from '../components/layout'
- 
+import { FaUserCircle } from "react-icons/fa";
+
 const Profile = () => {
     const firstName = localStorage.getItem("firstName");
     const lastName = localStorage.getItem("lastName")
@@ -14,6 +15,8 @@ const Profile = () => {
     <>
         <Layout>
             <form action="" className="rounded border grid p-8 gap-8 bg-white">
+            <FaUserCircle className='justify-self-center' size={60}/>
+            <p>View Signed in Users profile information</p>
             <div className="">
                 <label htmlFor="" className=''>First Name</label> <br/>
                 <input type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' placeholder={firstName} name='first_name' />

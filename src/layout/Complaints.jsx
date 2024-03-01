@@ -9,24 +9,16 @@ import moment from 'moment';
 
 
 const Complaints = () => {
-  const [modalIsOpen, setIsOpen] = React.useState(false);
-  const [feedbackOpen, setFeedbackOpen] = React.useState(false);
-  const [complaints, setComplaints] = useState([ ]);
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const [feedbackOpen, setFeedbackOpen] = useState(false); 
+  const [assignOpen, setAssignOpen] = useState(false);
+  const [assign, setAssign] = useState('');
+  const [userComplaints, setUserComplaints] = useState([]);
+  const [allComplaints, setAllComplaints] = useState([]);
+  const [assignedComplaints, setAssignedComplaints] = useState([]);
+  const [feedback, setFeedback] = useState([]);
   const accessToken = localStorage.getItem("accessToken");
-
-  function openModal() {
-    setIsOpen(true);
-  }
-  function closeModal() {
-    setIsOpen(false);
-  }
-  function openFeedbackModal() {
-    setFeedbackOpen(true);
-  }
-  function closeFeedbackModal() {
-    setFeedbackOpen(false);
-  }
-
+  const userType = localStorage.getItem("userType")
   const customStyles = {
     content: {
       top: '50%',
@@ -41,7 +33,6 @@ const Complaints = () => {
       width: (window.innerWidth <1024 ? '90%' : '40%')
     },
   };
-
   const userInput = {
     title: '',
     description: '',
@@ -51,8 +42,28 @@ const Complaints = () => {
     student: 1,
     staff: null
   }
-
   const [formData, setFormData] = useState(userInput);
+
+
+  function openModal() {
+    setIsOpen(true);
+  }
+  function closeModal() {
+    setIsOpen(false);
+  }
+  function openFeedbackModal() {
+    setFeedbackOpen(true);
+  }
+  function closeFeedbackModal() {
+    setFeedbackOpen(false);
+  }
+  function openAssignModal() {
+    setAssignOpen(true);
+  }
+  function closeAssignModal() {
+    setAssignOpen(false);
+  }
+  
 
   const handleChange = (e) => {
   setFormData({
@@ -74,6 +85,34 @@ const Complaints = () => {
       toast.success("Success!", {
           toastId: customId
       });
+  } catch (error) {
+      console.error('There was a problem with the request:', error.message);
+      toast.error(error.message, {
+          toastId: customId
+      });
+  }
+  };
+
+  const handleAssignChange = (e) => {
+    setAssign({
+        ...assign,
+        [e.target.name]: e.target.value
+    });
+    };
+  
+  const handleAssignSubmit = async (e) => {
+  e.preventDefault();
+  const customId = 99999;
+
+  try {
+      const response = await axios.put(endpoint + 'assign-complaint/2/', null, {
+        headers: {
+        'Authorization': `Bearer ${accessToken}`
+        }
+    });
+      toast.success("Assigned Successfully!", {
+          toastId: customId
+      });
       console.log(response);
   } catch (error) {
       console.error('There was a problem with the request:', error.message);
@@ -83,6 +122,7 @@ const Complaints = () => {
   }
   };
 
+  // Get User Complaints (User)
   useEffect(() => {
     axios.get(endpoint + 'complaints-by-user/', {
         headers: {
@@ -91,8 +131,7 @@ const Complaints = () => {
     })
     .then(response => {
         // Handle response data
-        setComplaints(response.data);
-        console.log(response.data);
+        setUserComplaints(response.data);
     })
     .catch(error => {
         // Handle error
@@ -100,8 +139,53 @@ const Complaints = () => {
     });
   }, []);
 
+  // Get All Complaints (Admin)
+  useEffect(() => {
+    axios.get(endpoint + 'complaint/', {
+        headers: {
+        'Authorization': `Bearer ${accessToken}`
+        }
+    })
+    .then(response => {
+        setAllComplaints(response.data);
+    })
+    .catch(error => {
+        console.error('Error fetching data:', error);
+    });
+  }, []);
 
-  const [feedback, setFeedback] = useState([]);
+  // Get Assigned Complaints to Staff (Admin)
+  useEffect(() => {
+    axios.get(endpoint + 'assigned-complaints/', {
+        headers: {
+        'Authorization': `Bearer ${accessToken}`
+        }
+    })
+    .then(response => {
+      console.log(response);
+        setAssignedComplaints(response.data);
+    })
+    .catch(error => {
+        console.error('Error fetching data:', error);
+    });
+  }, []);
+
+  // Get All Staff (Admin)
+  useEffect(() => {
+    axios.get(endpoint + 'assign-complaint/', {
+        headers: {
+        'Authorization': `Bearer ${accessToken}`
+        }
+    })
+    .then(response => {
+      console.log(response);
+        setAssignedComplaints(response.data);
+    })
+    .catch(error => {
+        console.error('Error fetching data:', error);
+    });
+  }, []);
+
   const handleFeedbackChange = (e) => {
   setFeedback({
       ...feedback,
@@ -131,7 +215,6 @@ const Complaints = () => {
   };
 
 
-
   let card = `rounded border p-8 shadow-sm bg-white`;
   let button = `w-full justify-self-center h-12 rounded text-white mt-8`;
 
@@ -140,14 +223,94 @@ const Complaints = () => {
     <ToastContainer autoClose={8000} />
       <Layout>
       <div className="grid gap-y-10">
-        <div className={`${card}`}>
-          <h4 className='text-xl font-semibold mb-6'>Submit Complaints</h4>
-          <p>
-          Dear valued users,
-          Your feedback is crucial to us! If you have any concerns, complaints, or suggestions regarding our services, we encourage you to share them with us. Your input helps us improve and ensures that we continue to meet your needs effectively.
-          </p>
-          <button onClick={openModal} className={`${button} bg-blue-600`}>Submit a Complaint</button>
-        </div>
+
+        {userType != '1' && userType != '2' ?
+          <div className={`${card}`}>
+            <h4 className='text-xl font-semibold mb-6'>Submit Complaints</h4>
+            <p>
+            Dear valued users,
+            Your feedback is crucial to us! If you have any concerns, complaints, or suggestions regarding our services, we encourage you to share them with us. Your input helps us improve and ensures that we continue to meet your needs effectively.
+            </p>
+            <button onClick={openModal} className={`${button} bg-blue-600`}>Submit a Complaint</button>
+          </div>
+          : ''
+        }
+          
+          {userComplaints.length == 0 && userType == '1' ?       
+            <div className={`${card}`}>
+              <h4 className='text-xl font-semibold mb-6'>View Submitted Complaints</h4>
+              {allComplaints.length === 0 ? 'No generated complaints' : ''}
+              <div className='grid lg:grid-cols-2 gap-8'>
+                {allComplaints.map((x,key) =>
+                <div className={`rounded-md border p-4 w-full bg-gray-100`} key={key}>
+                  <div>
+                    <p className='text-right mb-4 text-sm'>{moment(x.submission_date).format('MMMM Do YYYY, h:mm:ss a')}</p>
+                    <p className="title font-semibold text-lg">{x.title}</p>
+                    <p className="desc mb-5">{x.description}</p>
+                    <div className="grid grid-cols-2">
+                      <p className='mt-4'>Status: <span className="font-semibold">{x.status}</span></p> 
+                      <p className='justify-self-end bg-gray-400 self-end rounded-lg text-white w-min px-2'>{x.category}</p>
+                    </div>
+                    <button type='submit' className={`${button} bg-green-600`} onClick={openAssignModal}>Assign</button>
+                  </div>
+                </div>
+                
+                )}
+              </div>          
+            </div>
+           : userType == '2' ?
+            <div className={`${card}`}>
+              <h4 className='text-xl font-semibold mb-6'>View Assigned Complaints</h4>
+              {assignedComplaints.length === 0 ? 'No assigned complaints' : ''}
+              <div className='grid lg:grid-cols-2 gap-8'>
+                {assignedComplaints.map((x,key) =>
+                <div className={`rounded-md border p-4 w-full ${x.status == 'resolved' ? 'bg-[#D9ECED]' : 'bg-[#F8EAEB]' }`} key={key}>
+                  <div>
+                    <p className='text-right mb-4 text-sm'>{moment(x.submission_date).format('MMMM Do YYYY, h:mm:ss a')}</p>
+                    <p className="title font-semibold text-lg">{x.title}</p>
+                    <p className="desc mb-5">{x.description}</p>
+                    <div className="grid grid-cols-2">
+                      <p className='mt-4'>Status: <span className="font-semibold">{x.status}</span></p> 
+                      <p className='justify-self-end bg-gray-400 self-end rounded-lg text-white w-min px-2'>{x.category}</p>
+                    </div>
+                    <button className={`${button} ${x.status == 'resolved' ? 'bg-green-600' : 'bg-red-600' }`} onClick={openFeedbackModal} >
+                      <button onClick={() => setFeedback({ complaint: x.complaint_id, student: x.student, staff: 1 })} >
+                        Leave Feedback
+                      </button>
+                    </button>
+
+                  </div>
+                </div>
+                )}
+              </div>          
+            </div>
+            :
+            <div className={`${card}`}>
+              <h4 className='text-xl font-semibold mb-6'>View Submitted Complaints</h4>
+              {userComplaints.length === 0 ? 'No submitted complaints' : ''}
+              <div className='grid lg:grid-cols-2 gap-8'>
+                {userComplaints.map((x,key) =>
+                <div className={`rounded-md border p-4 w-full ${x.status == 'resolved' ? 'bg-[#D9ECED]' : 'bg-[#F8EAEB]' }`} key={key}>
+                  <div>
+                    <p className='text-right mb-4 text-sm'>{moment(x.submission_date).format('MMMM Do YYYY, h:mm:ss a')}</p>
+                    <p className="title font-semibold text-lg">{x.title}</p>
+                    <p className="desc mb-5">{x.description}</p>
+                    <div className="grid grid-cols-2">
+                      <p className='mt-4'>Status: <span className="font-semibold">{x.status}</span></p> 
+                      <p className='justify-self-end bg-gray-400 self-end rounded-lg text-white w-min px-2'>{x.category}</p>
+                    </div>
+                    <button className={`${button} ${x.status == 'resolved' ? 'bg-green-600' : 'bg-red-600' }`} onClick={openFeedbackModal} >
+                      <button onClick={() => setFeedback({ complaint: x.complaint_id, student: x.student, staff: 1 })} >
+                        Leave Feedback
+                      </button>
+                    </button>
+
+                  </div>
+                </div>
+                )}
+              </div>          
+            </div>
+          }
 
           <Modal
             isOpen={modalIsOpen}
@@ -183,38 +346,12 @@ const Complaints = () => {
                 </form>
               </div>
           </Modal>
-          
-          {complaints.length != 0 ?
-            <div className={`${card}`}>
-              <h4 className='text-xl font-semibold mb-6'>View Submitted Complaints</h4>
-              <div className='grid lg:grid-cols-2 gap-8'>
-                {complaints.map((x,key) =>
-                <div className={`rounded-md border p-4 w-full ${x.status == 'resolved' ? 'bg-[#D9ECED]' : 'bg-[#F8EAEB]' }`} key={key}>
-                  <div>
-                    <p className='text-right mb-4 text-sm'>{moment(x.submission_date).format('MMMM Do YYYY, h:mm:ss a')}</p>
-                    <p className="title font-semibold text-lg">{x.title}</p>
-                    <p className="desc mb-5">{x.description}</p>
-                    <div className="grid grid-cols-2">
-                      <p className='mt-4'>Status: <span className="font-semibold">{x.status}</span></p> 
-                      <p className='justify-self-end bg-gray-400 self-end rounded-lg text-white w-min px-2'>{x.category}</p>
-                    </div>
-                    <button className={`${button} ${x.status == 'resolved' ? 'bg-green-600' : 'bg-red-600' }`} onClick={() => setFeedback({ complaint: x.complaint_id, student: x.student, staff: 1 })} >
-                      <button onClick={openFeedbackModal}>
-                        Leave Feedback
-                      </button>
-                    </button>
 
-                  </div>
-                </div>
-                )}
-              </div>          
-            </div>
-           :''}
           <Modal
             isOpen={feedbackOpen}
             onRequestClose={closeFeedbackModal}
             style={customStyles}
-            contentLabel="Submit Complaint"
+            contentLabel="Submit Feedback"
           >
             <button onClick={closeFeedbackModal} className='float-right'><IoClose size={20} className='text-blue-600 mb-4'/></button>
             <div className="shadow-sm clear-both p-4">
@@ -226,6 +363,30 @@ const Complaints = () => {
                 </form>
               </div>
           </Modal>
+
+          <Modal
+            isOpen={assignOpen}
+            onRequestClose={closeAssignModal}
+            style={customStyles}
+            contentLabel="Assign Complaint"
+          >
+            <button onClick={closeAssignModal} className='float-right'><IoClose size={20} className='text-blue-600 mb-4'/></button>
+            <div className="shadow-sm clear-both p-4">
+                <h4 className='text-xl font-semibold mb-6'>Assign Complaint</h4>
+                <p>Please assign a complaint to any of the staff below</p>
+                <form action="" className='mt-4' onSubmit={handleAssignSubmit}>
+                  <select name="" id="" className='rounded w-full mt-1 p-2 border border-blue-400'>
+                    {assignedComplaints.map((x, key) => 
+                      <option value={x.id} key={key} onChange={handleAssignChange}>
+                        {x.full_name}
+                      </option>
+                    )}
+                  </select>
+                  <button type='submit' className={`${button} bg-green-600`}>Submit</button>
+                </form>
+              </div>
+          </Modal>
+          
 
         </div>
       </Layout>

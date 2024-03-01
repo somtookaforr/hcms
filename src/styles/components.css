@@ -41,7 +41,8 @@ nav, footer{
     text-decoration: none;
     font-size: 36px;
     color: #818181;
-    display: block;
+    /* display: block; */
+    display: flex;
     transition: 0.3s;
   }
   

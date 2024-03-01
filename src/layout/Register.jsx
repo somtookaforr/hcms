@@ -5,16 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import { endpoint } from '../App';
 
 const Register = () => {
-    // const userInput = {
-    //     first_name: '',
-    //     last_name: '',
-    //     email: '',
-    //     username: '',
-    //     user_type: '',
-    //     phone_number: '',
-    //     password: '',
-    //     password2: '',
-    // }
     const [formData, setFormData] = useState('');
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
@@ -25,7 +15,6 @@ const Register = () => {
         [e.target.name]: e.target.value
     });
     };
-
 
     const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,8 +28,7 @@ const Register = () => {
         toast.success("Account created successfully, Please proceed to login!", {
             toastId: customId
           });
-        navigate('./');
-        // console.log(response);
+        //   navigate('/Index', { replace: true })
     } catch (error) {
         toast.dismiss();
         console.error('There was a problem with the request:', error.message);

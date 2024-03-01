@@ -4,6 +4,7 @@ import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { endpoint } from '../App';
+import { IoExitOutline } from "react-icons/io5";
 
 const Header = () => {
   const accessToken = localStorage.getItem("accessToken");
@@ -37,6 +38,7 @@ const Header = () => {
 
   return (
     <div className='shadow-lg h-16 w-full bg-white'>
+        <ToastContainer autoClose={8000} />
         <div className='relative grid justify-items-end px-5'>
           <div className="flex py-2 userDropdown">
             <p className='self-center text-lg'>{localStorage.getItem("userName")}</p>
@@ -44,7 +46,10 @@ const Header = () => {
           </div>
           <div className="grid bg-white userContent">
             <a href="./profile" className="px-8 py-2.5">View Profile</a>
-            <button onClick={logOut} className='bg-red-600 text-white py-2.5 rounded'>Log Out</button>
+            <divv className="flex bg-red-600 text-white justify-self-center px-8">
+            <button onClick={logOut} className='py-2.5 rounded'>Log Out </button>
+            <IoExitOutline className='self-center ml-2' size={22}/>
+            </divv>
           </div>
         </div>
     </div>

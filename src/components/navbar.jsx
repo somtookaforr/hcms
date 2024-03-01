@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { NavLink } from 'react-router-dom';
-import { IoClose, IoMenu } from 'react-icons/io5'
+import { IoClose, IoMenu, IoHome, IoDesktopOutline, IoPersonCircleSharp, IoPeopleCircle } from 'react-icons/io5'
+
 
 const Navbar = () => {
   function openNav() {
@@ -26,6 +27,7 @@ const Navbar = () => {
   }, []);
 
   const userType = localStorage.getItem("userType")
+  const screenWidth = window.innerWidth < 1024;
 
   return (
     <>
@@ -40,31 +42,35 @@ const Navbar = () => {
             <div className="grid px-6 gap-y-10">
             <NavLink
               to="/index"
-              onClick={window.innerWidth < 1024 ? closeNav : ''}
-              className={'navItems'}
+              onClick={screenWidth ? closeNav : ''}
+              className={'navItems flex'}
               > 
+              <IoHome size={screenWidth ? 30 : 22} className='self-center mr-1' />
               Index
             </NavLink>
             <NavLink
               to="/complaints"
-              onClick={window.innerWidth < 1024 ? closeNav : ''}
-              className={'navItems'}
+              onClick={screenWidth ? closeNav : ''}
+              className={'navItems flex'}
               > 
+              <IoDesktopOutline size={screenWidth ? 30 : 22} className='self-center mr-1' />
               Complaints
               </NavLink>
               <NavLink
               to="/profile"
-              onClick={window.innerWidth < 1024 ? closeNav : ''}
-              className={'navItems'}
+              onClick={screenWidth ? closeNav : ''}
+              className={'navItems flex'}
               > 
+              <IoPersonCircleSharp size={screenWidth ? 30 : 22} className='self-center mr-1' />
               Profile
               </NavLink>
               {userType == 1 ?
               <NavLink
               to="/users"
-              onClick={window.innerWidth < 1024 ? closeNav : ''}
-              className={'navItems'}
+              onClick={screenWidth ? closeNav : ''}
+              className={'navItems flex'}
               > 
+              <IoPeopleCircle size={screenWidth ? 30 : 22} className='self-center mr-1' />
               Users
               </NavLink>
               : ''

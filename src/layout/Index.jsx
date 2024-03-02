@@ -18,7 +18,10 @@ const Index = () => {
             localStorage.setItem("lastName", response.data.last_name);
             localStorage.setItem("phoneNumber", response.data.phone_number);
             localStorage.setItem("userType", response.data.user_type);
-            localStorage.setItem("userName", response.data.username);               
+            localStorage.setItem("userName", response.data.username);   
+            localStorage.setItem("hall", response.data.hostel);   
+            localStorage.setItem("roomNumber", response.data.room_number);  
+            localStorage.setItem("role", response.data.role);  
         })
         .catch(error => {
             console.error('Error fetching data:', error);

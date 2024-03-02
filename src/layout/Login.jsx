@@ -3,6 +3,8 @@ import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { endpoint } from '../App';
+import { BsBuildings } from "react-icons/bs";
+
 
 const Login = () => {
     const userInput = {
@@ -49,7 +51,14 @@ const Login = () => {
     
   return (
     <div className='grid bg-blue-950 h-screen'>
-        <ToastContainer autoClose={8000} />
+        <ToastContainer autoClose={4000} />
+        <div className={'text-white h-12 grid'}> 
+            <div className="flex justify-self-center">
+                <BsBuildings size={50}/>  
+                <p className='self-center font-bold text-3xl'>HCMS</p>   
+            </div>
+            <p className='text-white text-center text-xl mt-4'>Hall Complaints Management System</p>      
+        </div>
         <form onSubmit={handleSubmit} className='lg:w-1/3 grid gap-y-4 p-10 rounded border border-blue-400 justify-self-center h-max'>
             <div className="">
                 <label htmlFor="" className='text-white'>Email</label> <br/>

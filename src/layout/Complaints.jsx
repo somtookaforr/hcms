@@ -100,12 +100,14 @@ const Complaints = () => {
     });
     };
   
+// console.log(assign.id)
+
   const handleAssignSubmit = async (e) => {
   e.preventDefault();
   const customId = 99999;
 
   try {
-      const response = await axios.put(endpoint + 'assign-complaint/2/', null, {
+      const response = await axios.put(endpoint + `assign-complaint/${assign.staff}/`, assign, {
         headers: {
         'Authorization': `Bearer ${accessToken}`
         }
@@ -172,7 +174,7 @@ const Complaints = () => {
 
   // Get All Staff (Admin)
   useEffect(() => {
-    axios.get(endpoint + 'assign-complaint/', {
+    axios.get(endpoint + 'assign-complaint/staff_list/', {
         headers: {
         'Authorization': `Bearer ${accessToken}`
         }
@@ -220,7 +222,7 @@ const Complaints = () => {
 
   return (
     <>
-    <ToastContainer autoClose={8000} />
+    <ToastContainer autoClose={4000} />
       <Layout>
       <div className="grid gap-y-10">
 
@@ -249,7 +251,7 @@ const Complaints = () => {
                     <p className="desc mb-5">{x.description}</p>
                     <div className="grid grid-cols-2">
                       <p className='mt-4'>Status: <span className="font-semibold">{x.status}</span></p> 
-                      <p className='justify-self-end bg-gray-400 self-end rounded-lg text-white w-min px-2'>{x.category}</p>
+                      <p className='justify-self-end bg-white self-end rounded-xl w-min px-4 py-1'>{x.category}</p>
                     </div>
                     <button type='submit' className={`${button} bg-green-600`} onClick={openAssignModal}>Assign</button>
                   </div>
@@ -271,14 +273,8 @@ const Complaints = () => {
                     <p className="desc mb-5">{x.description}</p>
                     <div className="grid grid-cols-2">
                       <p className='mt-4'>Status: <span className="font-semibold">{x.status}</span></p> 
-                      <p className='justify-self-end bg-gray-400 self-end rounded-lg text-white w-min px-2'>{x.category}</p>
+                      <p className='justify-self-end bg-white self-end rounded-xl w-min px-4 py-1'>{x.category}</p>
                     </div>
-                    <button className={`${button} ${x.status == 'resolved' ? 'bg-green-600' : 'bg-red-600' }`} onClick={openFeedbackModal} >
-                      <button onClick={() => setFeedback({ complaint: x.complaint_id, student: x.student, staff: 1 })} >
-                        Leave Feedback
-                      </button>
-                    </button>
-
                   </div>
                 </div>
                 )}
@@ -297,7 +293,7 @@ const Complaints = () => {
                     <p className="desc mb-5">{x.description}</p>
                     <div className="grid grid-cols-2">
                       <p className='mt-4'>Status: <span className="font-semibold">{x.status}</span></p> 
-                      <p className='justify-self-end bg-gray-400 self-end rounded-lg text-white w-min px-2'>{x.category}</p>
+                      <p className='justify-self-end bg-white self-end rounded-xl w-min px-4 py-1'>{x.category}</p>
                     </div>
                     <button className={`${button} ${x.status == 'resolved' ? 'bg-green-600' : 'bg-red-600' }`} onClick={openFeedbackModal} >
                       <button onClick={() => setFeedback({ complaint: x.complaint_id, student: x.student, staff: 1 })} >
@@ -375,9 +371,9 @@ const Complaints = () => {
                 <h4 className='text-xl font-semibold mb-6'>Assign Complaint</h4>
                 <p>Please assign a complaint to any of the staff below</p>
                 <form action="" className='mt-4' onSubmit={handleAssignSubmit}>
-                  <select name="" id="" className='rounded w-full mt-1 p-2 border border-blue-400'>
+                  <select name="staff" id="" className='rounded w-full mt-1 p-2 border border-blue-400' onChange={handleAssignChange}>
                     {assignedComplaints.map((x, key) => 
-                      <option value={x.id} key={key} onChange={handleAssignChange}>
+                      <option value={x.id} key={key}>
                         {x.full_name}
                       </option>
                     )}

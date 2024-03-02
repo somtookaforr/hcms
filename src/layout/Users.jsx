@@ -119,7 +119,7 @@ const Users = () => {
 
   return (
     <>
-        <ToastContainer autoClose={8000} />
+        <ToastContainer autoClose={4000} />
         <Layout>
         <div className='grid gap-y-4'>
             <div action="" className="rounded border grid p-8 bg-white">

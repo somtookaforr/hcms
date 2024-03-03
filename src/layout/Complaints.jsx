@@ -6,6 +6,7 @@ import axios from 'axios';
 import { endpoint } from '../App';
 import { toast, ToastContainer } from 'react-toastify';
 import moment from 'moment';
+import Spinner from '../components/spinner';
 
 
 const Complaints = () => {
@@ -17,6 +18,7 @@ const Complaints = () => {
   const [allComplaints, setAllComplaints] = useState([]);
   const [assignedComplaints, setAssignedComplaints] = useState([]);
   const [feedback, setFeedback] = useState([]);
+  const [loading, setLoading] = useState(true);
   const accessToken = localStorage.getItem("accessToken");
   const userType = localStorage.getItem("userType")
   const customStyles = {
@@ -100,8 +102,6 @@ const Complaints = () => {
     });
     };
   
-// console.log(assign.id)
-
   const handleAssignSubmit = async (e) => {
   e.preventDefault();
   const customId = 99999;
@@ -153,9 +153,13 @@ const Complaints = () => {
     })
     .catch(error => {
         console.error('Error fetching data:', error);
-    });
+    }).finally(() => {
+      setLoading(false)
+    })
   }, []);
 
+
+  
   // Get Assigned Complaints to Staff (Admin)
   useEffect(() => {
     axios.get(endpoint + 'assigned-complaints/', {
@@ -237,8 +241,17 @@ const Complaints = () => {
           </div>
           : ''
         }
-          
-          {userComplaints.length == 0 && userType == '1' ?       
+
+
+          {loading ? 
+            <div className="grid mt-40">
+              <div className="place-self-center">
+                <Spinner/>
+              </div>    
+            </div>
+          :
+          <>
+          {userType === '1'  ?       
             <div className={`${card}`}>
               <h4 className='text-xl font-semibold mb-6'>View Submitted Complaints</h4>
               {allComplaints.length === 0 ? 'No generated complaints' : ''}
@@ -306,6 +319,8 @@ const Complaints = () => {
                 )}
               </div>          
             </div>
+          }
+          </>
           }
 
           <Modal

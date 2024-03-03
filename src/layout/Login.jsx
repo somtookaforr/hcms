@@ -48,10 +48,15 @@ const Login = () => {
     }
     };
     
+    function toastTimeOut() {
+        setTimeout(() => {
+            <ToastContainer autoClose={4000} />
+        }, 100);
+    }
     
   return (
     <div className='grid bg-blue-950 h-screen'>
-        <ToastContainer autoClose={4000} />
+        {toastTimeOut()}
         <div className={'text-white h-12 grid'}> 
             <div className="flex justify-self-center">
                 <BsBuildings size={50}/>  

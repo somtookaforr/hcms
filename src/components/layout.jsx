@@ -9,7 +9,7 @@ const Layout = ({ children }) => {
             <Navbar />
         </div>
         
-      <main className='col-span-9  overflow-y-auto h-screen'>
+      <main className='col-span-9 overflow-y-auto h-screen'>
         <Header />
         <div className='my-12 lg:px-20 px-6'>
         {/* Render children within the main content */}

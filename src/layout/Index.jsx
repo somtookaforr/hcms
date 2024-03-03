@@ -3,6 +3,7 @@ import Layout from '../components/layout'
 import axios from 'axios'
 import { endpoint } from '../App'
 
+
 const Index = () => {
     const accessToken = localStorage.getItem("accessToken");
     
@@ -13,26 +14,29 @@ const Index = () => {
             }
         })
         .then(response => {
-            localStorage.setItem("email", response.data.email);
-            localStorage.setItem("firstName", response.data.first_name);
-            localStorage.setItem("lastName", response.data.last_name);
-            localStorage.setItem("phoneNumber", response.data.phone_number);
             localStorage.setItem("userType", response.data.user_type);
-            localStorage.setItem("userName", response.data.username);   
-            localStorage.setItem("hall", response.data.hostel);   
-            localStorage.setItem("roomNumber", response.data.room_number);  
-            localStorage.setItem("role", response.data.role);  
+            localStorage.setItem("userName", response.data.username);    
         })
         .catch(error => {
             console.error('Error fetching data:', error);
         });
     }, []);
     
+
+    let card = `rounded border p-8 shadow-sm bg-white`;
+    // let button = `w-full justify-self-center h-12 rounded text-white mt-8`;
+
   return (
     <>
     <Layout>
-        <div className="grid gap-y-10">
-            Index
+        <div className="grid gap-8">
+            <div className={`grid lg:grid-cols-12 gap-8`}>
+                <div className={`${card} md:col-span-9`}></div>
+                <div className={`${card} md:col-span-3`}></div>
+            </div>
+            <div className={`${card}`}>
+
+            </div>
         </div>  
     </Layout>
     </>

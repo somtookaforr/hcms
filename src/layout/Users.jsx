@@ -5,7 +5,7 @@ import { endpoint } from '../App'
 import { toast, ToastContainer } from 'react-toastify';
 import Modal from 'react-modal';
 import { IoClose } from 'react-icons/io5'
-
+import Spinner from '../components/spinner';
 
 const Users = () => {
     const [users, setUsers] = useState([]);
@@ -14,6 +14,7 @@ const Users = () => {
     
     const [formData, setFormData] = useState('');
     const [loading, setLoading] = useState(false);
+    const [spinner, setSpinner] = useState(true)
     const [modalIsOpen, setIsOpen] = React.useState(false);
     const customId = 99999;
     const endpointHeaders ={
@@ -111,15 +112,26 @@ const Users = () => {
         })
         .then(response => {            
             setUsers(response.data);
+            localStorage.setItem("totalUsers", response.data.length);
         })
         .catch(error => {
             console.error('Error fetching data:', error);
-        });
+        })
+        .finally(() => {
+            setSpinner(false);
+        })
     }, []);
+
+    function toastTimeOut() {
+        setTimeout(() => {
+            <ToastContainer autoClose={4000} />
+        }, 100);
+    }
+
 
   return (
     <>
-        <ToastContainer autoClose={4000} />
+        {toastTimeOut()}
         <Layout>
         <div className='grid gap-y-4'>
             <div action="" className="rounded border grid p-8 bg-white">
@@ -128,8 +140,17 @@ const Users = () => {
                 <button className='w-full bg-blue-600 h-12 rounded text-white mt-8' onClick={openModal}>Create</button>
             </div>
 
+            {spinner ?
+            <div className="grid mt-40">
+                <div className="place-self-center">
+                <Spinner/>
+                </div>    
+            </div>
+            :
+            <>
             {users.length !== 0 ? 
             <div className="rounded border grid p-8 gap-8 bg-white">
+                {users.length === 0 ? 'No generated complaints' : ''}
                 <div className="grid md:grid-cols-2 gap-8">
                     {users.map((x,key) => 
                         <div className="shadow-lg p-5 rounded" key={key}>
@@ -203,6 +224,8 @@ const Users = () => {
 
             </div>
             : ''}
+            </>
+            }
         </div>
         </Layout>
     </>

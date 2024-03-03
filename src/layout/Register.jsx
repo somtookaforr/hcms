@@ -40,10 +40,15 @@ const Register = () => {
     }
     };
 
+    function toastTimeOut() {
+        setTimeout(() => {
+            <ToastContainer autoClose={8000} />
+        }, 100);
+    }
 
   return (
     <div className='grid bg-blue-950'>
-        <ToastContainer autoClose={8000} />
+        {toastTimeOut()}
         <div className={'text-white h-12 flex justify-self-center mt-16'}> 
               <BsBuildings size={50}/>  
               <p className='self-center font-bold text-3xl'>HCMS</p>          

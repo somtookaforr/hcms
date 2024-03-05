@@ -41,13 +41,13 @@ const Navbar = () => {
             <IoClose onClick={closeNav} size={30} className={isSmallScreen ? 'ml-auto cursor-pointer self-center text-white' : 'hidden'} />
           </div>
           <div className="overlay-content cursor-pointer">
-            <div className="grid px-6 gap-y-10">
+            <div className="grid px-6 gap-y-10 mt-20">
             <NavLink
               to="/index"
               onClick={smallScreenWidth ? closeNav : ''}
               className={'navItems flex'}
               > 
-              <IoHome size={smallScreenWidth ? 30 : 22} className='self-center mr-1' />
+              <IoHome size={smallScreenWidth ? 28 : 22} className='self-center mr-2' />
               Index
             </NavLink>
             <NavLink
@@ -55,7 +55,7 @@ const Navbar = () => {
               onClick={smallScreenWidth ? closeNav : ''}
               className={'navItems flex'}
               > 
-              <IoDesktopOutline size={smallScreenWidth ? 30 : 22} className='self-center mr-1' />
+              <IoDesktopOutline size={smallScreenWidth ? 28 : 22} className='self-center mr-2' />
               Complaints
               </NavLink>
               <NavLink
@@ -63,7 +63,7 @@ const Navbar = () => {
               onClick={smallScreenWidth ? closeNav : ''}
               className={'navItems flex'}
               > 
-              <IoPersonCircleSharp size={smallScreenWidth ? 30 : 22} className='self-center mr-1' />
+              <IoPersonCircleSharp size={smallScreenWidth ? 28 : 22} className='self-center mr-2' />
               Profile
               </NavLink>
               {userType == 1 ?
@@ -72,12 +72,12 @@ const Navbar = () => {
               onClick={smallScreenWidth ? closeNav : ''}
               className={'navItems flex'}
               > 
-              <IoPeopleCircle size={smallScreenWidth ? 30 : 22} className='self-center mr-1' />
+              <IoPeopleCircle size={smallScreenWidth ? 28 : 22} className='self-center mr-2' />
               Users
               </NavLink>
               : ''
               }
-              </div>
+            </div>
           </div>
       </nav>
 

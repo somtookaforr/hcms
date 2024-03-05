@@ -1,4 +1,5 @@
 import React from "react";
+import { DataProvider } from "./components/context";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import './App.css'
 import Index from "./layout/Index";
@@ -8,10 +9,10 @@ import Login from "./layout/Login";
 import Complaints from "./layout/Complaints";
 import Users from "./layout/Users";
 export const endpoint = 'https://hcms-backend-wmdp.onrender.com/api/';
-// export const accessToken = localStorage.getItem("accessToken");
 
 function App() {
   return (
+    <DataProvider>
     <div className="App">
     <Router>
       <Routes>
@@ -24,6 +25,7 @@ function App() {
       </Routes>
     </Router>      
     </div>
+    </DataProvider>
   );
 }
 

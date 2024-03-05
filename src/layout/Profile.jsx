@@ -4,14 +4,16 @@ import { FaUserCircle } from "react-icons/fa";
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import { endpoint } from '../App';
+import { useData } from '../components/context';
 
 
 const Profile = () => {
     const [formData, setFormData] = useState('');
     const [loading, setLoading] = useState(false);
     const accessToken = localStorage.getItem("accessToken");
-    const [profileInfo, setProfileInfo] = useState('');
+    const { profile, fetchProfile } = useData();
     
+  
     const handleChange = (e) => {
     setFormData({
         ...formData,
@@ -35,15 +37,7 @@ const Profile = () => {
         toast.success("Success!", {
             toastId: customId
         });
-        // localStorage.setItem("firstName", formData.first_name);
-        // localStorage.setItem("lastName", formData.last_name);
-        // localStorage.setItem("email", formData.email);
-        // localStorage.setItem("phoneNumber", formData.phone_number);
-        // localStorage.setItem("userType", formData.user_type);
         localStorage.setItem("userName", formData.username); 
-        // localStorage.setItem("hall", formData.hostel);
-        // localStorage.setItem("roomNumber", formData.room_number);
-        // localStorage.setItem("role", formData.role);
     } catch (error) {
         toast.dismiss();
         console.error('There was a problem with the request:', error.message);
@@ -54,19 +48,9 @@ const Profile = () => {
         setLoading(false);
     }
     };
-    
+
     useEffect(() => {
-        axios.get(endpoint + 'profile/', {
-            headers: {
-            'Authorization': `Bearer ${accessToken}`
-            }
-        })
-        .then(response => {
-            setProfileInfo(response.data);
-        })
-        .catch(error => {
-            console.error('Error fetching data:', error);
-        });
+        fetchProfile(endpoint + 'profile/')                
     }, []);
     
 
@@ -89,51 +73,51 @@ const Profile = () => {
             <FaUserCircle className='justify-self-center text-blue-950' size={70}/>
             <div className="">
                 <label htmlFor="" className=''>First Name</label> <br/>
-                <input onChange={handleChange} type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' placeholder={profileInfo.first_name} name='first_name' />
+                <input onChange={handleChange} type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' placeholder={profile?.first_name} name='first_name' />
             </div>
             
             <div className="">
                 <label htmlFor="" className=''>Last Name</label> <br/>
-                <input onChange={handleChange} type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' placeholder={profileInfo.last_name} name='last_name' />
+                <input onChange={handleChange} type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' placeholder={profile?.last_name} name='last_name' />
             </div>
             
             <div className="">
                 <label htmlFor="" className=''>Email</label> <br/>
-                <input onChange={handleChange} type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' placeholder={profileInfo.email} name='email' />
+                <input onChange={handleChange} type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' placeholder={profile?.email} name='email' />
             </div>
             
             <div className="">
                 <label htmlFor="" className=''>User Name</label> <br/>
-                <input onChange={handleChange} type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' placeholder={profileInfo.user_name} name='username' /> 
+                <input onChange={handleChange} type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' placeholder={profile?.username} name='username' /> 
             </div>
 
             <div className="">
                 <label htmlFor="" className=''>Phone Number</label> <br/>
-                <input onChange={handleChange} type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' placeholder={profileInfo.phone_number} name='phone_number' />
+                <input onChange={handleChange} type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' placeholder={profile?.phone_number} name='phone_number' />
             </div>
 
             <div className="">
                 <label htmlFor="" className=''>User Type</label> <br/>
-                <input onChange={handleChange} type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' placeholder={profileInfo.user_type === 1 ? 'Admin' : profileInfo.user_type === 2 ? 'Staff' : profileInfo.user_type === 3 ? 'Student' : ''} name='user_type' disabled />    
+                <input onChange={handleChange} type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' placeholder={profile?.user_type === 1 ? 'Admin' : profile?.user_type === 2 ? 'Staff' : profile?.user_type === 3 ? 'Student' : ''} name='user_type' disabled />    
             </div>
 
-            {profileInfo.user_type === '2' ?
+            {profile?.user_type === 2 ?
             <div className="">
                 <label htmlFor="" className=''>Role</label> <br/>
-                <input onChange={handleChange} type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' placeholder={profileInfo.role} name='role' /> 
+                <input onChange={handleChange} type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' placeholder={profile?.role} name='role' /> 
             </div>
             : ''}
             
-            {profileInfo.user_type === '3' ?
+            {profile?.user_type === 3 ?
             <>
             <div className="">
-                <label htmlFor="" className=''>Hall</label> <br/>
-                <input onChange={handleChange} type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' placeholder={profileInfo.hall} name='hostel' />
+                <label htmlFor="" className=''>Hostel</label> <br/>
+                <input onChange={handleChange} type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' placeholder={profile?.hostel} name='hostel' />
             </div>
             
             <div className="">
                 <label htmlFor="" className=''>Room Number</label> <br/>
-                <input onChange={handleChange} type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' placeholder={profileInfo.room_number} name='room_number' />
+                <input onChange={handleChange} type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' placeholder={profile?.room_number} name='room_number' />
             </div>
             </>
             : ''}

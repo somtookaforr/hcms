@@ -2,7 +2,7 @@ import React from 'react'
 import { FaUserCircle } from "react-icons/fa";
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { endpoint } from '../App';
 import { IoExitOutline } from "react-icons/io5";
 
@@ -12,7 +12,7 @@ const Header = () => {
     refresh_token: localStorage.getItem("refreshToken")
   }
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const logOut = async (e) => {
     const customId = 99999;
@@ -27,7 +27,8 @@ const Header = () => {
             toastId: customId
         });
         localStorage.removeItem("accessToken");
-        navigate('/')
+        window.location.href = '/';
+        // navigate('/')
     } catch (error) {
         console.error('There was a problem with the request:', error.message);
         toast.error(error.message, {

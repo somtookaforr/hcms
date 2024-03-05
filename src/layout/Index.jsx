@@ -1,41 +1,103 @@
 import React,{useEffect} from 'react'
 import Layout from '../components/layout'
-import axios from 'axios'
 import { endpoint } from '../App'
-
+import { useData } from '../components/context'
+import moment from 'moment'
 
 const Index = () => {
-    const accessToken = localStorage.getItem("accessToken");
-    
+    const { complaints, fetchComplaints } = useData();
+    const { users, fetchUsers } = useData();
+    const { assigned, fetchAssigned } = useData();
+    const { userComplaints, fetchUserComplaints } = useData();
+    const { profile, fetchProfile } = useData();
+    const userType = localStorage.getItem("userType");
+
     useEffect(() => {
-        axios.get(endpoint + 'profile/', {
-            headers: {
-            'Authorization': `Bearer ${accessToken}`
-            }
-        })
-        .then(response => {
-            localStorage.setItem("userType", response.data.user_type);
-            localStorage.setItem("userName", response.data.username);    
-        })
-        .catch(error => {
-            console.error('Error fetching data:', error);
-        });
+        fetchProfile(endpoint + 'profile/')                
+    }, []);
+
+    useEffect(() => {
+        fetchUsers(endpoint + 'users/')                
+    }, []);
+
+    useEffect(() => {
+        fetchComplaints(endpoint + 'complaint/')                
+    }, []);
+
+    useEffect(() => {
+        fetchAssigned(endpoint + 'assigned-complaints/')                
+    }, []);
+
+    useEffect(() => {
+        fetchUserComplaints(endpoint + 'complaints-by-user/')                
     }, []);
     
 
-    let card = `rounded border p-8 shadow-sm bg-white`;
-    // let button = `w-full justify-self-center h-12 rounded text-white mt-8`;
+    
+    let card = `rounded-md border p-6 shadow-sm`;
 
   return (
     <>
     <Layout>
         <div className="grid gap-8">
-            <div className={`grid lg:grid-cols-12 gap-8`}>
-                <div className={`${card} md:col-span-9`}></div>
-                <div className={`${card} md:col-span-3`}></div>
+            <div className={`grid gap-8 ${userType === '1' ? 'lg:grid-cols-3' : 'lg:grid-cols-2'}`}>
+                <div className={`${card} bg-white`}>
+                    <p className="font-bold text-3xl">
+                        {userType === '1' ?
+                        complaints?.filter(item => item.status === 'Unresolved' || item.status === 'unresolved').length
+                        : userType === '2' ?
+                        assigned?.filter(item => item.status === 'Unresolved' || item.status === 'unresolved').length
+                        : userType === '3' ?
+                        userComplaints?.filter(item => item.status === 'Unresolved' || item.status === 'unresolved').length
+                        : '' }
+                    </p>
+                    <p>No. of unresolved complaints</p>
+                </div>
+                <div className={`${card} bg-white`}>
+                    <p className="font-bold text-3xl">
+                        {userType === '1' ?
+                        complaints?.filter(item => item.status === 'Reresolved' || item.status === 'reresolved').length
+                        : userType === '2' ?
+                        assigned?.filter(item => item.status === 'Reresolved' || item.status === 'reresolved').length
+                        : userType === '3' ?
+                        userComplaints?.filter(item => item.status === 'Reresolved' || item.status === 'reresolved').length
+                        : '' }
+                    </p>
+                    <p>No. of resolved complaints</p>
+                </div>
+                {userType === '1' ?
+                <div className={`${card} bg-white`}>
+                    <p className="font-bold text-3xl">{users?.length}</p>
+                    <p>No. of Users</p>
+                </div>
+                : '' }
             </div>
-            <div className={`${card}`}>
-
+            <div className='grid gap-y-4 mt-12 mb-4'>
+                <h3 className='font-semibold text-2xl'>Recent Complaints</h3>
+                <>
+                    {userType === '1' ?
+                        complaints?.slice(0,3)?.map((x,key) => 
+                            <div className={`${card} ${x.status == 'resolved' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }`} key={key}>
+                                {x.description}
+                                <div className='text-right'>{moment(x.submission_date).format('MMMM Do YYYY')}</div>     
+                            </div>
+                        )
+                    : userType === '2' ?
+                        assigned?.slice(0,3)?.map((x,key) => 
+                            <div className={`${card} ${x.status == 'resolved' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }`} key={key}>
+                                {x.description}
+                                <div className='text-right'>{moment(x.submission_date).format('MMMM Do YYYY')}</div>     
+                            </div>
+                        )
+                    : userType === '3' ?
+                        userComplaints?.slice(0,3)?.map((x,key) => 
+                            <div className={`${card} ${x.status == 'resolved' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }`} key={key}>
+                                {x.description}
+                                <div className='text-right'>{moment(x.submission_date).format('MMMM Do YYYY')}</div>     
+                            </div>
+                        )
+                    : '' }
+                </>
             </div>
         </div>  
     </Layout>

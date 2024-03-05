@@ -213,7 +213,7 @@ const Users = () => {
 
                                 <div className="">
                                     <label htmlFor="" className=''>Room number</label> <br/>
-                                    <input type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' placeholder={'room'} name='hall' onChange={handleChange} />
+                                    <input type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' placeholder={'room'} name='room_number' onChange={handleChange} />
                                 </div>
                         
 

@@ -46,7 +46,6 @@ const Complaints = () => {
   }
   const [formData, setFormData] = useState(userInput);
 
-
   function openModal() {
     setIsOpen(true);
   }
@@ -66,7 +65,6 @@ const Complaints = () => {
     setAssignOpen(false);
   }
   
-
   const handleChange = (e) => {
   setFormData({
       ...formData,
@@ -100,7 +98,7 @@ const Complaints = () => {
         ...assign,
         [e.target.name]: e.target.value
     });
-    };
+  };
   
   const handleAssignSubmit = async (e) => {
   e.preventDefault();
@@ -113,6 +111,34 @@ const Complaints = () => {
         }
     });
       toast.success("Assigned Successfully!", {
+          toastId: customId
+      });
+      console.log(response);
+  } catch (error) {
+      console.error('There was a problem with the request:', error.message);
+      toast.error(error.message, {
+          toastId: customId
+      });
+  }
+  };
+
+  const handleFeedbackChange = (e) => {
+  setFeedback({
+      ...feedback,
+      [e.target.name]: e.target.value
+  });
+  };
+  const handleFeedbackSubmit = async (e) => {
+  e.preventDefault();
+  const customId = 99999;
+
+  try {
+      const response = await axios.post(endpoint + 'feedback/', feedback, {
+        headers: {
+        'Authorization': `Bearer ${accessToken}`
+        }
+    });
+      toast.success("Feedback submitted successfully!", {
           toastId: customId
       });
       console.log(response);
@@ -157,8 +183,6 @@ const Complaints = () => {
       setLoading(false)
     })
   }, []);
-
-
   
   // Get Assigned Complaints to Staff (Admin)
   useEffect(() => {
@@ -192,34 +216,6 @@ const Complaints = () => {
     });
   }, []);
 
-  const handleFeedbackChange = (e) => {
-  setFeedback({
-      ...feedback,
-      [e.target.name]: e.target.value
-  });
-  };
-  const handleFeedbackSubmit = async (e) => {
-  e.preventDefault();
-  const customId = 99999;
-
-  try {
-      const response = await axios.post(endpoint + 'feedback/', feedback, {
-        headers: {
-        'Authorization': `Bearer ${accessToken}`
-        }
-    });
-      toast.success("Feedback submitted successfully!", {
-          toastId: customId
-      });
-      console.log(response);
-  } catch (error) {
-      console.error('There was a problem with the request:', error.message);
-      toast.error(error.message, {
-          toastId: customId
-      });
-  }
-  };
-
 
   let card = `rounded border p-8 shadow-sm bg-white`;
   let button = `w-full justify-self-center h-12 rounded text-white mt-8`;
@@ -244,11 +240,11 @@ const Complaints = () => {
 
 
           {loading ? 
-            <div className="grid mt-40">
-              <div className="place-self-center">
-                <Spinner/>
-              </div>    
-            </div>
+          <div className="grid mt-40">
+            <div className="place-self-center">
+              <Spinner/>
+            </div>    
+          </div>
           :
           <>
           {userType === '1'  ?       

@@ -40,20 +40,15 @@ const Register = () => {
     }
     };
 
-    function toastTimeOut() {
-        setTimeout(() => {
-            <ToastContainer autoClose={8000} />
-        }, 100);
-    }
 
   return (
     <div className='grid bg-blue-950'>
-        {toastTimeOut()}
+        <ToastContainer autoClose={8000} />
         <div className={'text-white h-12 flex justify-self-center mt-16'}> 
               <BsBuildings size={50}/>  
               <p className='self-center font-bold text-3xl'>HCMS</p>          
         </div>
-        <p className='text-white text-center text-xl mt-4'>Hall Complaints Management System</p>
+        <p className='text-white text-center text-xl mt-4'>Hostel Complaints Management System</p>
         <form onSubmit={handleSubmit} className='w-11/12 lg:w-1/3 grid gap-y-4 p-10 rounded border border-blue-400 justify-self-center my-20'>
             <div className="">
                 <label htmlFor="name" className='text-white'>First Name</label> <br/>

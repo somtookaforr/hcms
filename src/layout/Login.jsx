@@ -62,12 +62,12 @@ const Login = () => {
         <form onSubmit={handleSubmit} className='lg:w-1/3 grid gap-y-4 p-10 rounded border border-blue-400 justify-self-center h-max'>
             <div className="">
                 <label htmlFor="" className='text-white'>Email</label> <br/>
-                <input type="email" className='rounded h-9 w-full mt-1 p-2 border border-blue-400' name='email' value={formData.email} onChange={handleChange} required />
+                <input type="email" className='rounded h-11 w-full mt-1 p-2 border border-blue-400' name='email' value={formData.email} onChange={handleChange} required />
             </div>
                      
             <div className="">
                 <label htmlFor="password" className='text-white'>Password</label> <br/>
-                <input type="password" className='rounded h-9 w-full mt-1 p-2 border border-blue-400' name='password' value={formData.password} onChange={handleChange} required />
+                <input type="password" className='rounded h-11 w-full mt-1 p-2 border border-blue-400' name='password' value={formData.password} onChange={handleChange} required />
             </div>
 
             <p className='text-white text-right'>Don't have an account yet? <a href="/register" className='text-blue-600 underline'>Register</a></p>

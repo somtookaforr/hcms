@@ -180,29 +180,29 @@ const Users = () => {
                         <form action="" className='grid gap-y-4 mt-4' onSubmit={handleSubmit}>
                                 <div className="">
                                     <label htmlFor="" className=''>First Name</label> <br/>
-                                    <input type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' placeholder={'firstName'} name='first_name' onChange={handleChange} />
+                                    <input type="text" className='rounded h-11 w-full mt-1 p-1 border border-blue-400' placeholder={'firstName'} name='first_name' onChange={handleChange} />
                                 </div>
                                 
                                 <div className="">
                                     <label htmlFor="" className=''>Last Name</label> <br/>
-                                    <input type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' placeholder={'lastName'} name='last_name' onChange={handleChange} />
+                                    <input type="text" className='rounded h-11 w-full mt-1 p-1 border border-blue-400' placeholder={'lastName'} name='last_name' onChange={handleChange} />
                                 </div>
                                 
                                 <div className="">
                                     <label htmlFor="" className=''>Email</label> <br/>
-                                    <input type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' placeholder={'email'} name='email' onChange={handleChange} />
+                                    <input type="text" className='rounded h-11 w-full mt-1 p-1 border border-blue-400' placeholder={'email'} name='email' onChange={handleChange} />
                                 </div>
                                 
                                 
                                 <div className="">
                                     <label htmlFor="" className=''>Phone Number</label> <br/>
-                                    <input type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' placeholder={'phoneNumber'} name='phone_number' onChange={handleChange} />
+                                    <input type="text" className='rounded h-11 w-full mt-1 p-1 border border-blue-400' placeholder={'phoneNumber'} name='phone_number' onChange={handleChange} />
                                 </div>
 
                             
                                 <div className="">
                                     <label htmlFor="" className='text-white'>Hostel</label> <br/>
-                                    <select name="hostel" id="" className='rounded h-9 w-full mt-1 p-2 border border-blue-400' onChange={handleChange} required>
+                                    <select name="hostel" id="" className='rounded h-11 w-full mt-1 p-2 border border-blue-400' onChange={handleChange} required>
                                         <option value="" disabled>-Select-</option>
                                         <option value="101">Bethel Splendor</option>
                                         <option value="102">Welch</option>
@@ -213,7 +213,7 @@ const Users = () => {
 
                                 <div className="">
                                     <label htmlFor="" className=''>Room number</label> <br/>
-                                    <input type="text" className='rounded h-9 w-full mt-1 p-1 border border-blue-400' placeholder={'room'} name='room_number' onChange={handleChange} />
+                                    <input type="text" className='rounded h-11 w-full mt-1 p-1 border border-blue-400' placeholder={'room'} name='room_number' onChange={handleChange} />
                                 </div>
                         
 

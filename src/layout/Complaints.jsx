@@ -330,17 +330,17 @@ const Complaints = () => {
                 <h4 className='text-xl font-semibold mb-6'>Submit New Complaints</h4>
                 <p>Please fill in the details below</p>
                 <form action="" className='grid gap-y-4' onSubmit={handleSubmit}>
-                  <input name='title' type="text" placeholder='Title' className='rounded h-9 w-full mt-1 p-2 border border-blue-400' onChange={handleChange}/>
+                  <input name='title' type="text" placeholder='Title' className='rounded h-11 w-full mt-1 p-2 border border-blue-400' onChange={handleChange}/>
 
                   <textarea name='description' rows="5" type="text" placeholder='Description' className='rounded w-full mt-1 p-2 border border-blue-400' onChange={handleChange}></textarea>
 
-                  <select name="status" id="" className='rounded h-9 w-full mt-1 p-2 border border-blue-400' onChange={handleChange}>
+                  <select name="status" id="" className='rounded h-11 w-full mt-1 p-2 border border-blue-400' onChange={handleChange}>
                     <option value="">-Status-</option>
                     <option value="resolved">Resolved</option>
                     <option value="unresolved">Unresolved</option>
                   </select>
 
-                  <select name="category" id="" className='rounded h-9 w-full mt-1 p-2 border border-blue-400' onChange={handleChange}>
+                  <select name="category" id="" className='rounded h-11 w-full mt-1 p-2 border border-blue-400' onChange={handleChange}>
                     <option value="">-Category-</option>
                     <option value="plumbing">Plumbing</option>
                     <option value="masonry">Masonry</option>

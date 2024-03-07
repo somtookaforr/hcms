@@ -42,7 +42,7 @@ const Index = () => {
         <div className="grid gap-8">
             <div className={`grid gap-8 ${userType === '1' ? 'lg:grid-cols-3' : 'lg:grid-cols-2'}`}>
                 <div className={`${card} bg-white`}>
-                    <p className="font-bold text-3xl">
+                    <p className="font-bold text-3xl text-red-600">
                         {userType === '1' ?
                         complaints?.filter(item => item.status === 'Unresolved' || item.status === 'unresolved').length
                         : userType === '2' ?
@@ -54,7 +54,7 @@ const Index = () => {
                     <p>No. of unresolved complaints</p>
                 </div>
                 <div className={`${card} bg-white`}>
-                    <p className="font-bold text-3xl">
+                    <p className="font-bold text-3xl text-red-600">
                         {userType === '1' ?
                         complaints?.filter(item => item.status === 'Reresolved' || item.status === 'reresolved').length
                         : userType === '2' ?
@@ -67,7 +67,7 @@ const Index = () => {
                 </div>
                 {userType === '1' ?
                 <div className={`${card} bg-white`}>
-                    <p className="font-bold text-3xl">{users?.length}</p>
+                    <p className="font-bold text-3xl text-red-600">{users?.length}</p>
                     <p>No. of Users</p>
                 </div>
                 : '' }

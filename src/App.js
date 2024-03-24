@@ -8,13 +8,15 @@ import Profile from "./layout/Profile";
 import Login from "./layout/Login";
 import Complaints from "./layout/Complaints";
 import Users from "./layout/Users";
+
 export const endpoint = 'https://hcms-backend-wmdp.onrender.com/api/';
 
 function App() {
   return (
-    <DataProvider>
     <div className="App">
     <Router>
+    <DataProvider>
+
       <Routes>
         <Route exact path='/' element={<Login />} />
         <Route exact path='/index' element={<Index />} />
@@ -23,9 +25,10 @@ function App() {
         <Route exact path='/complaints' element={<Complaints />} />
         <Route exact path='/users' element={<Users />} />
       </Routes>
+      </DataProvider>
+
     </Router>      
     </div>
-    </DataProvider>
   );
 }
 
